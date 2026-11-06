@@ -1,0 +1,23 @@
+{
+  "name": "clock-25-analog-horror",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A deterministic Remotion starter for a 2D analog-horror video workflow.",
+  "scripts": {
+    "dev": "remotion studio src/index.ts",
+    "render:test": "remotion render src/index.ts TestCard out/test-card.mp4 --codec=h264",
+    "render:pilot": "remotion render src/index.ts Pilot out/pilot.mp4 --codec=h264 --scale=0.5",
+    "inspect:audio": "node scripts/inspect-audio.mjs",
+    "frames": "bash scripts/extract-frames.sh"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.0",
+    "remotion": "^4.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "typescript": "^5.0.0"
+  }
+}

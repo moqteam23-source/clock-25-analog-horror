@@ -1,0 +1,10 @@
+{
+  "title": "If Your Clock Ever Says 25:00... STAY IN BED",
+  "narrationDuration": "00:08:08.850",
+  "width": 1920,
+  "height": 1080,
+  "fps": 24,
+  "palette": ["#000000", "#FFFFFF", "#D71920", "#E6C84F"],
+  "status": "planning",
+  "notes": "Replace duration only if verified from the supplied source WAV. Approve scene plan before modifying the pilot or adding scenes."
+}

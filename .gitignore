@@ -1,0 +1,17 @@
+node_modules/
+out/
+build/
+.cache/
+.DS_Store
+.env
+.env.*
+!.env.example
+
+# Private source material and renders — never commit.
+private/
+public/audio/*.wav
+public/audio/*.mp3
+*.mp4
+*.mov
+*.mkv
+*.pdf
