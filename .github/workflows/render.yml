@@ -1,0 +1,68 @@
+name: render
+
+# Manual only. This workflow never runs on push or pull_request, and it never calls
+# any paid AI service or cloud GPU. It runs lightweight checks and, optionally, the
+# repo's own 3-second Remotion smoke test. It does NOT render the full 8-minute episode.
+on:
+  workflow_dispatch:
+    inputs:
+      run_remotion_smoke:
+        description: "Also run the 3s Remotion TestCard render (needs npm install)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install lightweight pipeline deps
+        run: python -m pip install --quiet pillow numpy
+
+      - name: Python syntax check (compile all pipeline modules)
+        run: python -m compileall -q tools/pipeline
+
+      - name: Pipeline import smoke test
+        working-directory: tools/pipeline
+        run: |
+          python -c "import engine, scenes, sfx; print('import OK:', len(scenes.SCENES), 'scenes')"
+
+      - name: Repository structure check
+        run: |
+          test -d assets/characters && ls assets/characters/*.svg >/dev/null
+          test -f docs/style-bible.md
+          test -f docs/animation-bible.md
+          test -f docs/remotion-compatibility.md
+          test -f .claude/skills/analog-horror-editor/SKILL.md
+          echo "structure OK"
+
+      - name: Secret and large-file guard
+        run: |
+          # fail if any tracked file is >5 MB or looks like media/credentials
+          big=$(git ls-files | xargs -I{} sh -c 'f="{}"; [ -f "$f" ] && s=$(wc -c <"$f") && [ "$s" -gt 5242880 ] && echo "$f ($s bytes)"' || true)
+          if [ -n "$big" ]; then echo "Large files tracked:"; echo "$big"; exit 1; fi
+          media=$(git ls-files | grep -Ei '\.(mp4|mov|mkv|wav|mp3)$' || true)
+          if [ -n "$media" ]; then echo "Media tracked (should be ignored):"; echo "$media"; exit 1; fi
+          echo "no large files or tracked media"
+
+  remotion-smoke:
+    if: ${{ inputs.run_remotion_smoke }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: npm install
+      - name: 3-second Remotion setup render (no narration, no story assets)
+        run: npm run render:test

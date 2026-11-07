@@ -15,3 +15,18 @@ public/audio/*.mp3
 *.mov
 *.mkv
 *.pdf
+
+# --- Python analog-horror pipeline (tools/pipeline) ---
+preview/
+*.wav
+*.mp3
+voice*
+__pycache__/
+*.pyc
+*.log
+scan.png
+sfx.wav
+# generated per-episode artifacts and private narration stay local
+captions.json
+hyp.json
+silences.txt

@@ -1,0 +1,9 @@
+Montserrat is Copyright 2011 The Montserrat Project Authors
+(https://github.com/JulietaUla/Montserrat), licensed under the
+SIL Open Font License, Version 1.1 (OFL-1.1).
+
+Full license text: https://openfontlicense.org
+Upstream source:    https://github.com/JulietaUla/Montserrat
+
+Only the 500, 600 and 700 weights are bundled here, for deterministic
+rendering of captions, HUD and card typography by the Python pipeline.
