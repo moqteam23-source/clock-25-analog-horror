@@ -72,3 +72,44 @@ Open this repository with Claude Code. The project skill is available at `.claud
 06-fix-pilot-after-qc
 07-add-approved-scene-batch
 ```
+
+---
+
+## Python production pipeline (primary, 30 fps)
+
+The primary analog-horror renderer is a Python/Pillow/FFmpeg pipeline under
+`tools/pipeline/`. The Remotion project above stays as the setup check and pilot
+preview. See `docs/remotion-compatibility.md` for how the two relate (the Python
+pipeline runs at 30 fps, Remotion at 24 fps) and `docs/style-bible.md` for the
+canonical visual spec.
+
+### Requirements
+- Python 3.10+ with `pillow` and `numpy` (`pip install pillow numpy`)
+- FFmpeg and ffprobe on PATH
+- Optional for the offline caption aligner: `pocketsphinx`, `num2words`
+
+### Local render (private inputs stay local)
+Keep the narration WAV and the script in the gitignored `private/` folder; they are
+never committed. A render needs a `script.txt` (one sentence per line), a `voice.mp3`,
+and a `channel.txt`, placed in a local working folder next to the pipeline:
+
+```bash
+cd tools/pipeline
+# captions.json, voice.mp3, script.txt etc. are all gitignored and stay local
+python render.py preview        # render a few preview frames, inspect, then:
+python render.py all 2          # full render on 2 cores -> final.mp4 (local only)
+```
+
+`final.mp4`, the voice track, `captions.json` and all per-episode text are gitignored
+and must not be committed to this public repository.
+
+### Character assets
+Approved, reusable SVG characters (one shared rig, named groups for animation) live in
+`assets/characters/` with their own README and a preview contact sheet. Do not redesign
+them; extend by adding new named-group SVGs.
+
+### CI
+`.github/workflows/render.yml` is manual only (`workflow_dispatch`). It runs a Python
+syntax check, a pipeline import test, a structure check, and a secret/large-file guard,
+and can optionally run the 3-second Remotion setup render. It never runs on push and
+never calls paid AI services.
