@@ -1,10 +1,24 @@
 {
   "title": "If Your Clock Ever Says 25:00... STAY IN BED",
   "narrationDuration": "00:08:08.850",
+  "narrationDurationSeconds": 488.85,
   "width": 1920,
   "height": 1080,
-  "fps": 24,
-  "palette": ["#000000", "#FFFFFF", "#D71920", "#E6C84F"],
-  "status": "planning",
-  "notes": "Replace duration only if verified from the supplied source WAV. Approve scene plan before modifying the pilot or adding scenes."
+  "fps": 30,
+  "renderer": "python-pipeline",
+  "palette": ["#000000", "#FFFFFF", "#F81C28", "#F9DE75"],
+  "assets": {
+    "characters": "approved SVG files in assets/characters/ only; no new or AI-generated characters",
+    "props": "deterministic code-drawn vector pictograms in tools/pipeline/engine.py; reusable, palette-locked, not image files, not AI-generated",
+    "noGray": "intruder and all figures are white and faceless with a red reveal accent; no gray value is used"
+  },
+  "status": "pilot-planning",
+  "pilot": {
+    "window": "00:00:00.000-00:00:20.000",
+    "windowSeconds": [0.0, 20.0],
+    "scope": "first 0 to 20 seconds only",
+    "scenes": 7,
+    "approved": false
+  },
+  "notes": "Duration verified from the supplied source WAV with ffprobe (488.85 s). Renderer set to the 30 fps Python pipeline. Palette is the canonical four-color set (#F81C28 red, #F9DE75 yellow); no gray added. Props are code-drawn vectors, not stored assets. Narration is the master timeline; verbatim lines are kept locally and never committed. Approve project/scene-plan.md before rendering the 0 to 20 second pilot. Do not render the full episode."
 }

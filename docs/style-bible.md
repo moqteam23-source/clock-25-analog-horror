@@ -79,8 +79,8 @@ Animal / threat (the thing that is wrong):
 - The eye becomes a solid red dot only at the story beat it is revealed, never from the first frame.
 - A threat face close-up is a flat shield head with two round eyes, a nose dot, and a teeth band (a dark rectangle with white tooth gaps) that appears instantly then widens a few px. Red eyes replace the black eyes. No shading, no texture, no fur.
 
-Gray worker (institutional figure, if the story needs one):
-- A mid-gray `#969696` featureless standing figure, no face at all, optionally holding a clipboard or reaching with one gloved forearm.
+Institutional figure (if the story needs one):
+- A solid white featureless standing figure, no face at all (at most one eye dash), optionally holding a clipboard or reaching with one forearm. It reads as wrong by posture and stillness, not by color. Any red accent (an eye dash or the object it offers) appears only at the reveal beat. Do not use a mid-gray fill; figures stay within the four-color palette so the institutional figure is white, not gray.
 
 Rules:
 - Every figure is readable as a black-and-white pictogram at thumbnail size.
@@ -105,6 +105,8 @@ Icons and markers:
 - Label pills: a filled rounded rectangle, yellow for a neutral highlight with black text, red for a danger label with white text. They pop in over about 4 frames with a slight overshoot.
 - Progress dashes and the seven numbered boxes are the only repeating UI. Everything else is a single icon.
 - Draw order every frame: background object first, then characters, then labels, bubbles and markers last, so nothing is hidden behind a shape.
+
+Props are deterministic, code-drawn vector pictograms rendered by the Python pipeline (`tools/pipeline/engine.py` drawing helpers), not image files and not AI-generated. Each is a parametric function (clock, phone, clipboard and pen, drawer, garment, seven boxes, analog clock, and so on), so it is reusable in any scene by calling the same helper and always obeys this palette. Only the approved figures in `assets/characters/` are stored as SVG files; props are drawn, not stored per scene.
 
 Forbidden in this layer: colorful app UI, realistic product renders, photographs except a deliberate archival black-and-white insert with a white frame and heavy grain.
 
